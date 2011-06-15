@@ -326,7 +326,8 @@ module Cinch
 
     # @deprecated See {HandlerList#dispatch} instead
     def dispatch(event, msg = nil, *arguments)
-      @bot.logger.debug "Deprecation warning: Beginning with version 1.2.0, Bot#dispatch should not be used anymore."
+      @logger.debug "Deprecation warning: Beginning with version 1.2.0, Bot#dispatch should not be used anymore."
+      puts caller
       @handlers.dispatch(event, msg, *arguments)
     end
 
