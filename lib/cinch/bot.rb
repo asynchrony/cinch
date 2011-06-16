@@ -64,7 +64,7 @@ module Cinch
     attr_reader :realname
     # @return [Time]
     attr_reader :signed_on_at
-    # @return [Array<Plugin>] All registered plugins
+    # @return [PluginList] All registered plugins
     attr_reader :plugins
     # @return [Boolean] whether the bot is in the process of disconnecting
     attr_reader :quitting
@@ -135,7 +135,9 @@ module Cinch
     # Stop execution of the current {#on} handler.
     #
     # @return [void]
+    # @deprecated Use `next` or `break` instead
     def halt
+      Cinch.print_deprecation("1.2.0", "Bot#halt")
       throw :halt
     end
 
