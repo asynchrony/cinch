@@ -139,7 +139,7 @@ module Cinch
     # @deprecated Use `next` or `break` instead
     # @note This method will be removed in Cinch 2.0.0
     def halt
-      Cinch.print_deprecation("1.2.0", "Bot#halt")
+      Cinch::Utilities::Deprecation.print_deprecation("1.2.0", "Bot#halt")
       throw :halt
     end
 
@@ -158,7 +158,7 @@ module Cinch
     # @deprecated See {Target#msg} instead
     # @note This method will be removed in Cinch 2.0.0
     def msg(recipient, text, notice = false)
-      Cinch.print_deprecation("1.2.0", "Bot#msg")
+      Cinch::Utilities::Deprecation.print_deprecation("1.2.0", "Bot#msg")
 
       Target(recipient).msg(text, notice)
     end
@@ -168,7 +168,7 @@ module Cinch
     # @deprecated See {Target#notice} instead
     # @note This method will be removed in Cinch 2.0.0
     def notice(recipient, text)
-      Cinch.print_deprecation("1.2.0", "Bot#notice")
+      Cinch::Utilities::Deprecation.print_deprecation("1.2.0", "Bot#notice")
 
       Target(recipient).msg(text, true)
     end
@@ -176,7 +176,7 @@ module Cinch
     # @deprecated See {Target#safe_msg} instead
     # @note This method will be removed in Cinch 2.0.0
     def safe_msg(recipient, text)
-      Cinch.print_deprecation("1.2.0", "Bot#safe_msg")
+      Cinch::Utilities::Deprecation.print_deprecation("1.2.0", "Bot#safe_msg")
 
       Target(recipient).safe_msg(text)
     end
@@ -186,7 +186,7 @@ module Cinch
     # @deprecated See {Target#safe_notice} instead
     # @note This method will be removed in Cinch 2.0.0
     def safe_notice(recipient, text)
-      Cinch.print_deprecation("1.2.0", "Bot#safe_notice")
+      Cinch::Utilities::Deprecation.print_deprecation("1.2.0", "Bot#safe_notice")
 
       Target(recipient).safe_msg(text, true)
     end
@@ -194,7 +194,7 @@ module Cinch
     # @deprecated See {Target#action} instead
     # @note This method will be removed in Cinch 2.0.0
     def action(recipient, text)
-      Cinch.print_deprecation("1.2.0", "Bot#action")
+      Cinch::Utilities::Deprecation.print_deprecation("1.2.0", "Bot#action")
 
       Target(recipient).action(text)
     end
@@ -202,7 +202,7 @@ module Cinch
     # @deprecated See {Target#safe_action} instead
     # @note This method will be removed in Cinch 2.0.0
     def safe_action(recipient, text)
-      Cinch.print_deprecation("1.2.0", "Bot#safe_action")
+      Cinch::Utilities::Deprecation.print_deprecation("1.2.0", "Bot#safe_action")
 
       Target(recipient).safe_action(text)
     end
@@ -221,6 +221,7 @@ module Cinch
     #     - :message (both channel and private messages)
     #     - :error   (handling errors, use a numeric error code as `match`)
     #     - :ctcp    (ctcp requests, use a ctcp command as `match`)
+    #     - :action  (actions, aka /me)
     #
     # @param [Regexp, String, Integer] match every message of the
     #   right event will be checked against this argument and the event
@@ -264,7 +265,7 @@ module Cinch
     # @deprecated See {HandlerList#dispatch} instead
     # @note This method will be removed in Cinch 2.0.0
     def dispatch(event, msg = nil, *arguments)
-      Cinch.print_deprecation("1.2.0", "Bot#dispatch")
+      Cinch::Utilities::Deprecation.print_deprecation("1.2.0", "Bot#dispatch")
 
       @handlers.dispatch(event, msg, *arguments)
     end
@@ -275,7 +276,7 @@ module Cinch
     # @deprecated See {Bot#plugins} and {PluginList#register_plugins} instead
     # @note This method will be removed in Cinch 2.0.0
     def register_plugins
-      Cinch.print_deprecation("1.2.0", "Bot#register_plugins")
+      Cinch::Utilities::Deprecation.print_deprecation("1.2.0", "Bot#register_plugins")
 
       @plugins.register_plugins(@config.plugins.plugins)
     end
@@ -287,7 +288,7 @@ module Cinch
     # @deprecated See {Bot#plugins} and {PluginList#register_plugin} instead
     # @note This method will be removed in Cinch 2.0.0
     def register_plugin(plugin)
-      Cinch.print_deprecation("1.2.0", "Bot#register_plugin")
+      Cinch::Utilities::Deprecation.print_deprecation("1.2.0", "Bot#register_plugin")
 
       @plugins.register_plugin(plugin)
     end
@@ -349,6 +350,7 @@ module Cinch
           # Sleep for a few seconds before reconnecting to prevent being
           # throttled by the IRC server
           wait = 2**@reconnects
+          wait = @config.max_reconnect_delay if wait > @config.max_reconnect_delay
           @logger.debug "Waiting #{wait} seconds before reconnecting"
           sleep wait
         end
